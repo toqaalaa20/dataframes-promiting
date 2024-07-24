@@ -10,12 +10,16 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Ignore virtual environment directories
-venv/
+pandas-promiting/
 
 
-#ignore the data folder
-datasets/
+#ignore datasets
+*.csv
+*.xlsx
 
 
-#ignore converting to pkl script
-dataset-storing.py
+# Ignore temporary files
+*.log
+
+# Ignore cache folder
+cache/
