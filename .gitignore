@@ -11,3 +11,11 @@ __pycache__/
 
 # Ignore virtual environment directories
 venv/
+
+
+#ignore the data folder
+datasets/
+
+
+#ignore converting to pkl script
+dataset-storing.py
