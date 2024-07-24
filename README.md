@@ -12,7 +12,7 @@ pip install requirements.txt
 ```
 https://pandabi.ai
 ```
-4. Create a file named config.ini.sample with the following content:
+4. Create a file named config.ini with the following content:
 ```
 [DEFAULT]
 PANDASAI_API_KEY = your_api_key_here
