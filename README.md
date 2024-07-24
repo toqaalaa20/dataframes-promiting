@@ -8,6 +8,16 @@ git clone https://github.com/toqaalaa20/dataframes-promiting
 ```
 pip install requirements.txt
 ```
+3. Generate you API key from
+```
+https://pandabi.ai
+```
+4. Create a file named config.ini.sample with the following content:
+```
+[DEFAULT]
+PANDASAI_API_KEY = your_api_key_here
+
+```
 3. Input your dataset
 
 ```
