@@ -24,28 +24,17 @@ def time_with_most_visits(filename):
 
 def women_in_peak_time(filename):
     df = pd.read_excel(filename)
-    # Convert the 'Time' column to datetime
-    df['Time'] = pd.to_datetime(df['Time'])
+    df['time'] = pd.to_datetime(df['Time'], format='%H:%M:%S')
 
-    # Ensure 'Is Female' is a boolean or integer
-    df['Is Female'] = df['Is Female'].astype(int)
+    df['time_in_minutes'] = df['time'].dt.hour * 60 + df['time'].dt.minute
+    female_df = df[df['Is Female'] == 1] 
 
-    # Set 'Time' as the index
-    df.set_index('Time', inplace=True)
+    female_counts = female_df.groupby('time_in_minutes').size()
 
-    # Resample by minute to count visitors per minute
-    visitor_counts = df.resample('T').size()
+    max_females = female_counts.max()
 
-    # Find the time with the most visitors
-    peak_time = visitor_counts.idxmax()
-
-    # Filter the data for the peak minute
-    peak_time_data = df[df.index == peak_time]
-
-    # Count the number of female visitors during the peak minute
-    female_count = peak_time_data['Is Female'].sum()
     
-    print(f"Number of female visitors during the peak minute ({peak_time}): {female_count}")
+    print(f"Number of female visitors during the peak minute: {max_females}")
 
 def most_common_visitor(filename):
     df= pd.read_excel(filename)
@@ -77,8 +66,8 @@ def intialize_agent(filename):
 
 def train(agent):
     queries = ["What time did I get the most visits?",
-               "How many woman visited me in my peak time?",
-               "who is my most common visitor?"
+               "How Many Woman visited me in my peak time?",
+               "who is My most common visitor?"
          ]
     responses = [
         """
@@ -102,23 +91,19 @@ def train(agent):
     result = { "type": "string", "value": peak_time.strftime('%H:%M:%S') }
     """,
     """
-    df['Time'] = pd.to_datetime(df['Time'])
+    import pandas as pd
+    df = dfs[0]
+    df['time'] = pd.to_datetime(df['Time'], format='%H:%M:%S')
 
-    # Set 'Time' as the index
-    df.set_index('Time', inplace=True)
+    df['time_in_minutes'] = df['time'].dt.hour * 60 + df['time'].dt.minute
+    female_df = df[df['Is Female'] == 1] 
 
-    # Resample by minute to count visitors per minute
-    visitor_counts = df.resample('T').size()
+    female_counts = female_df.groupby('time_in_minutes').size()
 
-    # Find the time with the most visitors
-    peak_time = visitor_counts.idxmax()
+    max_females = female_counts.max()
 
-    # Filter the data for the peak minute
-    peak_time_data = df[df.index == peak_time]
-
-    # Count the number of female visitors during the peak minute
-    female_count = peak_time_data['Is Female'].sum()
-    result = { "type": "string", "value": female_count }
+    result = { "type": "string", "value": f" The number of woman in peak time is {max_females}" }
+    
     """,
     """
     import pandas as pd
